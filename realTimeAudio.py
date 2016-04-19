@@ -11,10 +11,8 @@ def plotSomething():
     if SR.newAudio==False: 
         return
     xs,ys=SR.fft()
-    ys = SR.movingaverage(ys, 50)    
-    SR.isFurnaceOn(ys, 'live')        
-    yys = [float(i) for i in ys]
-    c.setData(xs,yys)
+    SR.getNote(xs, ys)
+    c.setData(xs,ys)
     uiplot.qwtPlot.replot()
     SR.newAudio=False
 
@@ -31,7 +29,7 @@ if __name__ == "__main__":
     c=Qwt.QwtPlotCurve()  
     c.attach(uiplot.qwtPlot)
     
-    uiplot.qwtPlot.setAxisScale(uiplot.qwtPlot.yLeft, 0, 100000)
+    uiplot.qwtPlot.setAxisScale(uiplot.qwtPlot.yLeft, 0, 10000)
     
     uiplot.timer = QtCore.QTimer()
     uiplot.timer.start(1.0)
