@@ -28,7 +28,7 @@ class Ui_win_plot(object):
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setContentsMargins(6, 0, 6, 0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        
+                
         self.currentNote = QtGui.QLabel(self.centralwidget)
         self.currentNote.setObjectName(_fromUtf8("currentNote"))
         self.horizontalLayout.addWidget(self.currentNote)
@@ -36,6 +36,11 @@ class Ui_win_plot(object):
         self.nextNote = QtGui.QLabel(self.centralwidget)
         self.nextNote.setObjectName(_fromUtf8("nextNote"))
         self.horizontalLayout.addWidget(self.nextNote)
+
+        font = QtGui.QFont("Arial", 14, QtGui.QFont.Bold) 
+        self.currentNote.setFont(font)
+        self.nextNote.setFont(font)
+                
 
 #        self.btnA = QtGui.QPushButton(self.centralwidget)
 #        self.btnA.setObjectName(_fromUtf8("btnA"))
@@ -48,7 +53,7 @@ class Ui_win_plot(object):
         QtCore.QMetaObject.connectSlotsByName(win_plot)
 
     def retranslateUi(self, win_plot):
-        win_plot.setWindowTitle(QtGui.QApplication.translate("win_plot", "MainWindow", None, QtGui.QApplication.UnicodeUTF8))
+        win_plot.setWindowTitle(QtGui.QApplication.translate("win_plot", "Song Builder", None, QtGui.QApplication.UnicodeUTF8))
 #        self.btnA.setText(QtGui.QApplication.translate("win_plot", "A", None, QtGui.QApplication.UnicodeUTF8))
         self.currentNote.setText(QtGui.QApplication.translate("win_plot", "Current Note: ", None, QtGui.QApplication.UnicodeUTF8))
         self.nextNote.setText(QtGui.QApplication.translate("win_plot", "Try Playing: ", None, QtGui.QApplication.UnicodeUTF8))

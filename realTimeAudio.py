@@ -42,6 +42,7 @@ if __name__ == "__main__":
     recorder = Recorder()
     recorder.setup()
     recorder.continuousStart()
+    
    
     ### DISPLAY WINDOWS
     win_plot.show()
