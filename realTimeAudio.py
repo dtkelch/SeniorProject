@@ -8,17 +8,17 @@ from recorder import *
 
 
 def plotSomething():
-    if SR.newAudio==False: 
+    if recorder.newAudio==False: 
         return
-    xs,ys=SR.fft()
-    chord = SR.getNote(xs, ys)
+    xs,ys=recorder.fft()
+    chord = recorder.getNote(xs, ys)
     if chord:    
         uiplot.currentNote.setText("Current Note: " + chord[0])
         uiplot.nextNote.setText("Try Playing: " + ', '.join(chord[1][1:]))
 
     c.setData(xs,ys)
     uiplot.qwtPlot.replot()
-    SR.newAudio=False
+    recorder.newAudio=False
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
@@ -28,8 +28,7 @@ if __name__ == "__main__":
     uiplot.setupUi(win_plot)
     #uiplot.btnA.clicked.connect(plotSomething)
     #uiplot.btnB.clicked.connect(lambda: uiplot.timer.setInterval(100.0))
-    #uiplot.btnC.clicked.connect(lambda: uiplot.timer.setInterval(10.0))
-    #uiplot.btnD.clicked.connect(lambda: uiplot.timer.setInterval(1.0))
+    
     c=Qwt.QwtPlotCurve()  
     c.attach(uiplot.qwtPlot)
     
@@ -40,12 +39,12 @@ if __name__ == "__main__":
     
     win_plot.connect(uiplot.timer, QtCore.SIGNAL('timeout()'), plotSomething) 
     
-    SR=SwhRecorder()
-    SR.setup()
-    SR.continuousStart()
+    recorder = Recorder()
+    recorder.setup()
+    recorder.continuousStart()
    
     ### DISPLAY WINDOWS
     win_plot.show()
     code=app.exec_()
-    SR.close()
+    recorder.close()
     sys.exit(code)

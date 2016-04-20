@@ -40,15 +40,7 @@ class Ui_win_plot(object):
 #        self.btnA = QtGui.QPushButton(self.centralwidget)
 #        self.btnA.setObjectName(_fromUtf8("btnA"))
 #        self.horizontalLayout.addWidget(self.btnA)
-#        self.btnB = QtGui.QPushButton(self.centralwidget)
-#        self.btnB.setObjectName(_fromUtf8("btnB"))
-#        self.horizontalLayout.addWidget(self.btnB)
-#        self.btnC = QtGui.QPushButton(self.centralwidget)
-#        self.btnC.setObjectName(_fromUtf8("btnC"))
-#        self.horizontalLayout.addWidget(self.btnC)
-#        self.btnD = QtGui.QPushButton(self.centralwidget)
-#        self.btnD.setObjectName(_fromUtf8("btnD"))
-#        self.horizontalLayout.addWidget(self.btnD)
+
         self.verticalLayout.addLayout(self.horizontalLayout)
         win_plot.setCentralWidget(self.centralwidget)
 
@@ -58,9 +50,6 @@ class Ui_win_plot(object):
     def retranslateUi(self, win_plot):
         win_plot.setWindowTitle(QtGui.QApplication.translate("win_plot", "MainWindow", None, QtGui.QApplication.UnicodeUTF8))
 #        self.btnA.setText(QtGui.QApplication.translate("win_plot", "A", None, QtGui.QApplication.UnicodeUTF8))
-#        self.btnB.setText(QtGui.QApplication.translate("win_plot", "B", None, QtGui.QApplication.UnicodeUTF8))
-#        self.btnC.setText(QtGui.QApplication.translate("win_plot", "C", None, QtGui.QApplication.UnicodeUTF8))
-#        self.btnD.setText(QtGui.QApplication.translate("win_plot", "D", None, QtGui.QApplication.UnicodeUTF8))
         self.currentNote.setText(QtGui.QApplication.translate("win_plot", "Current Note: ", None, QtGui.QApplication.UnicodeUTF8))
         self.nextNote.setText(QtGui.QApplication.translate("win_plot", "Try Playing: ", None, QtGui.QApplication.UnicodeUTF8))
 
