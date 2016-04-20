@@ -22,7 +22,7 @@ if __name__ == "__main__":
     win_plot = ui_plot.QtGui.QMainWindow()
     uiplot = ui_plot.Ui_win_plot()
     uiplot.setupUi(win_plot)
-    uiplot.btnA.clicked.connect(plotSomething)
+    #uiplot.btnA.clicked.connect(plotSomething)
     #uiplot.btnB.clicked.connect(lambda: uiplot.timer.setInterval(100.0))
     #uiplot.btnC.clicked.connect(lambda: uiplot.timer.setInterval(10.0))
     #uiplot.btnD.clicked.connect(lambda: uiplot.timer.setInterval(1.0))

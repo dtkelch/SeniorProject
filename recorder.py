@@ -18,7 +18,8 @@ class SwhRecorder:
         self.secToRecord=.1
         self.threadsDieNow=False
         self.newAudio=False
-        # note:freq(hZ)        
+        # note:freq(hZ)    
+        self.THRESHOLD = 30000
         self.notes = {
                         1:{'C':32.703,
                         'C#/Db':34.648,
@@ -397,6 +398,8 @@ class SwhRecorder:
         'A# / Bb':['Bb', 'Cm', 'Dm', 'Eb', 'F', 'Gm'],
         'B':['B', 'C#m', 'D#m', 'E', 'F#', 'G#m']
         }
+        
+        self.last_played = ''
 
 #        for freq in self.notes.values():
 #            
@@ -494,15 +497,26 @@ class SwhRecorder:
         return xs,ys
         
     def getNote(self, xs, ys):
-        played_freq = xs[numpy.argmax(ys)]
         
-        loc = [i for i, rng in enumerate(self.ranges) if played_freq > rng[0] and played_freq <= rng[1]]
+        # this filters out the noise, only continues if there        
+        if max(ys) > self.THRESHOLD:
             
-        #print("xs max: ", played_freq)
-        chord = self.chords[loc[0]]
-        play_next = self.circle[chord]
-        print 'chord: ', chord
-        print 'try playing', play_next, 'next'
+            # gets the most frequent frequency
+            high_freq = numpy.argmax(ys)
+            
+            # the frequency of the most frequent frequency
+            played_freq = xs[high_freq]
+            
+            # finds which chord correspends to the frequency
+            loc = [i for i, rng in enumerate(self.ranges) if played_freq > rng[0] and played_freq <= rng[1]]
+            chord = self.chords[loc[0]]
+            play_next = self.circle[chord]
+            
+            # only prints if different from last chord
+            if play_next != self.last_played:
+                print 'you are playing a', chord, 'try playing', play_next, 'next'
+                self.last_played = play_next
+
 
     ### VISUALIZATION ###
 
