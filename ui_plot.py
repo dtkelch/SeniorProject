@@ -28,6 +28,15 @@ class Ui_win_plot(object):
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setContentsMargins(6, 0, 6, 0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
+        
+        self.currentNote = QtGui.QLabel(self.centralwidget)
+        self.currentNote.setObjectName(_fromUtf8("currentNote"))
+        self.horizontalLayout.addWidget(self.currentNote)
+        
+        self.nextNote = QtGui.QLabel(self.centralwidget)
+        self.nextNote.setObjectName(_fromUtf8("nextNote"))
+        self.horizontalLayout.addWidget(self.nextNote)
+
 #        self.btnA = QtGui.QPushButton(self.centralwidget)
 #        self.btnA.setObjectName(_fromUtf8("btnA"))
 #        self.horizontalLayout.addWidget(self.btnA)
@@ -52,6 +61,8 @@ class Ui_win_plot(object):
 #        self.btnB.setText(QtGui.QApplication.translate("win_plot", "B", None, QtGui.QApplication.UnicodeUTF8))
 #        self.btnC.setText(QtGui.QApplication.translate("win_plot", "C", None, QtGui.QApplication.UnicodeUTF8))
 #        self.btnD.setText(QtGui.QApplication.translate("win_plot", "D", None, QtGui.QApplication.UnicodeUTF8))
+        self.currentNote.setText(QtGui.QApplication.translate("win_plot", "Current Note: ", None, QtGui.QApplication.UnicodeUTF8))
+        self.nextNote.setText(QtGui.QApplication.translate("win_plot", "Try Playing: ", None, QtGui.QApplication.UnicodeUTF8))
 
 from PyQt4 import Qwt5
 

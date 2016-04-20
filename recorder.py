@@ -19,7 +19,7 @@ class SwhRecorder:
         self.threadsDieNow=False
         self.newAudio=False
         # note:freq(hZ)    
-        self.THRESHOLD = 30000
+        self.THRESHOLD = 40000
         self.notes = {
                         1:{'C':32.703,
                         'C#/Db':34.648,
@@ -472,14 +472,6 @@ class SwhRecorder:
 
     ### MATH ###
 
-    def downsample(self,data,mult):
-        """Given 1D data, return the binned average."""
-        overhang=len(data)%mult
-        if overhang: data=data[:-overhang]
-        data=numpy.reshape(data,(len(data)/mult,mult))
-        data=numpy.average(data,1)
-        return data    
-
     def fft(self,data=None,trimBy=10,logScale=False,divBy=100):
         if data==None: 
             data=self.audio.flatten()
@@ -497,7 +489,7 @@ class SwhRecorder:
         return xs,ys
         
     def getNote(self, xs, ys):
-        
+        play_next = []
         # this filters out the noise, only continues if there        
         if max(ys) > self.THRESHOLD:
             
@@ -514,13 +506,5 @@ class SwhRecorder:
             
             # only prints if different from last chord
             if play_next != self.last_played:
-                print 'you are playing a', chord, 'try playing', play_next, 'next'
                 self.last_played = play_next
-
-
-    ### VISUALIZATION ###
-
-    def plotAudio(self):
-        """open a matplotlib popup window showing audio data."""
-        pylab.plot(self.audio.flatten())
-        pylab.show()
+                return [chord, play_next]

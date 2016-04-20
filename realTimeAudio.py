@@ -11,7 +11,11 @@ def plotSomething():
     if SR.newAudio==False: 
         return
     xs,ys=SR.fft()
-    SR.getNote(xs, ys)
+    chord = SR.getNote(xs, ys)
+    if chord:    
+        uiplot.currentNote.setText("Current Note: " + chord[0])
+        uiplot.nextNote.setText("Try Playing: " + ', '.join(chord[1][1:]))
+
     c.setData(xs,ys)
     uiplot.qwtPlot.replot()
     SR.newAudio=False
@@ -39,7 +43,7 @@ if __name__ == "__main__":
     SR=SwhRecorder()
     SR.setup()
     SR.continuousStart()
-
+   
     ### DISPLAY WINDOWS
     win_plot.show()
     code=app.exec_()
