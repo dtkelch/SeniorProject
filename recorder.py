@@ -406,10 +406,8 @@ class Recorder:
 
     def setup(self):
         """initialize sound card."""
-        #TODO - windows detection vs. alsa or something for linux
-        #TODO - try/except for sound card selection/initiation
 
-        self.buffersToRecord = int(self.RATE*self.secToRecord/self.BUFFERSIZE)
+        self.buffersToRecord = int(self.RATE * self.secToRecord / self.BUFFERSIZE)
         if self.buffersToRecord == 0:
             self.buffersToRecord = 1
         self.samplesToRecord = int(self.BUFFERSIZE * self.buffersToRecord)
@@ -417,11 +415,11 @@ class Recorder:
         self.secPerPoint = 1.0 / self.RATE
 
         self.p = pyaudio.PyAudio()
-        self.inStream = self.p.open(format=pyaudio.paInt16,channels=1,
-            rate=self.RATE,input=True,frames_per_buffer=self.BUFFERSIZE)
-        self.xsBuffer=numpy.arange(self.BUFFERSIZE)*self.secPerPoint
-        self.xs=numpy.arange(self.chunksToRecord*self.BUFFERSIZE)*self.secPerPoint
-        self.audio=numpy.empty((self.chunksToRecord*self.BUFFERSIZE),dtype=numpy.int16)               
+        self.inStream = self.p.open(format = pyaudio.paInt16,channels = 1,
+            rate = self.RATE, input = True, frames_per_buffer = self.BUFFERSIZE)
+        self.xsBuffer = numpy.arange(self.BUFFERSIZE) * self.secPerPoint
+        self.xs = numpy.arange(self.chunksToRecord * self.BUFFERSIZE) * self.secPerPoint
+        self.audio = numpy.empty((self.chunksToRecord * self.BUFFERSIZE), dtype=numpy.int16)               
 
     def close(self):
         """cleanly back out and release sound card."""
@@ -432,7 +430,7 @@ class Recorder:
     def getAudio(self):
         """get a single buffer size worth of audio."""
         audioString = self.inStream.read(self.BUFFERSIZE)
-        return numpy.fromstring(audioString,dtype=numpy.int16)
+        return numpy.fromstring(audioString,dtype = numpy.int16)
 
     def record(self,forever=True):
         """record secToRecord seconds of audio."""
