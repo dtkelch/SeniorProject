@@ -395,7 +395,7 @@ class SwhRecorder:
         'G# / Ab':['Ab', 'Bbm', 'Cm', 'Db', 'Eb', 'Fm'],
         'A':['A', 'Bm', 'C#m', 'D', 'E', 'F#m'],
         'A# / Bb':['Bb', 'Cm', 'Dm', 'Eb', 'F', 'Gm'],
-        'B':['B', 'C♯m', 'D#m', 'E', 'F#', 'G#m']
+        'B':['B', 'C#m', 'D#m', 'E', 'F#', 'G#m']
         }
 
 #        for freq in self.notes.values():
@@ -499,7 +499,10 @@ class SwhRecorder:
         loc = [i for i, rng in enumerate(self.ranges) if played_freq > rng[0] and played_freq <= rng[1]]
             
         #print("xs max: ", played_freq)
-        print 'chord: ', self.chords[loc[0]]
+        chord = self.chords[loc[0]]
+        play_next = self.circle[chord]
+        print 'chord: ', chord
+        print 'try playing', play_next, 'next'
 
     ### VISUALIZATION ###
 
