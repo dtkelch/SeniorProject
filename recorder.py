@@ -18,7 +18,7 @@ class Recorder:
         self.secToRecord = .1
         self.threadsDieNow = False
         self.newAudio = False
-        self.THRESHOLD = 40000
+        self.threshold = 50000
         self.notes = {
             1:{'C':32.703,
             'C#/Db':34.648,
@@ -471,7 +471,7 @@ class Recorder:
     def getNote(self, xs, ys):
         play_next = []
         # this filters out the noise, only continues if there        
-        if max(ys) > self.THRESHOLD:
+        if max(ys) > self.threshold:
             
             # gets the most frequent frequency
             high_freq = numpy.argmax(ys)
@@ -489,6 +489,9 @@ class Recorder:
                 self.last_played = play_next
                 return [chord, play_next]
                 
+                
+    def increaseThreshold(self):
+        self.threshold += 1000            
     def generateRanges(self):
         pass
 #        for freq in self.notes.values():

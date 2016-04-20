@@ -19,6 +19,7 @@ def plotSomething():
     c.setData(xs,ys)
     uiplot.qwtPlot.replot()
     recorder.newAudio=False
+        
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
@@ -26,7 +27,6 @@ if __name__ == "__main__":
     win_plot = ui_plot.QtGui.QMainWindow()
     uiplot = ui_plot.Ui_win_plot()
     uiplot.setupUi(win_plot)
-    #uiplot.btnA.clicked.connect(plotSomething)
     #uiplot.btnB.clicked.connect(lambda: uiplot.timer.setInterval(100.0))
     
     c=Qwt.QwtPlotCurve()  
@@ -43,6 +43,8 @@ if __name__ == "__main__":
     recorder.setup()
     recorder.continuousStart()
     
+#    uiplot.btnA.clicked.connect(recorder.increaseThreshold())
+
    
     ### DISPLAY WINDOWS
     win_plot.show()
