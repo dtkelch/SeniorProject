@@ -22,28 +22,28 @@ def plotSomething():
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
-    
+
     win_plot = ui_plot.QtGui.QMainWindow()
     uiplot = ui_plot.Ui_win_plot()
     uiplot.setupUi(win_plot)
     #uiplot.btnA.clicked.connect(plotSomething)
     #uiplot.btnB.clicked.connect(lambda: uiplot.timer.setInterval(100.0))
-    
-    c=Qwt.QwtPlotCurve()  
+
+    c=Qwt.QwtPlotCurve()
     c.attach(uiplot.qwtPlot)
-    
+
     uiplot.qwtPlot.setAxisScale(uiplot.qwtPlot.yLeft, 0, 10000)
-    
+
     uiplot.timer = QtCore.QTimer()
     uiplot.timer.start(1.0)
-    
+
     win_plot.connect(uiplot.timer, QtCore.SIGNAL('timeout()'), plotSomething) 
-    
+
     recorder = Recorder()
     recorder.setup()
     recorder.continuousStart()
-    
-   
+
+
     ### DISPLAY WINDOWS
     win_plot.show()
     code=app.exec_()
