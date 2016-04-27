@@ -11,7 +11,8 @@ def plotSomething():
     if recorder.newAudio==False: 
         return
     xs,ys=recorder.fft()
-    chord = recorder.getNote(xs, ys)
+    #chord = recorder.getNote(xs, ys)
+    chord = recorder.getChord(xs, ys)    
     if chord:    
         uiplot.currentLabel.setText("Current: " + chord[0])
         uiplot.nextLabel.setText("Next: " + ', '.join(chord[1][1:]))

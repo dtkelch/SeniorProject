@@ -540,6 +540,25 @@ class Recorder:
         
         self.last_played = ''
         self.played = []
+        
+        self.c_chords = {
+            'I':['C', 'E', 'G'],
+            'ii':['D', 'F', 'A'],
+            'iii':['E', 'G', 'B'],
+            'IV':['F', 'A', 'C'],
+            'V':['G', 'B', 'D'],
+            'vi':['A', 'C', 'E'],
+            'vii':['B', 'D', 'F']
+        }
+        
+        self.progressions = [
+            ['I', 'V', 'vi', 'IV'],
+            ['I', 'V', 'vi', 'iii'],
+            ['vi', 'V', 'IV', 'V'],
+            ['I', 'vi', 'IV', 'V'],
+            ['I', 'IV', 'vi', 'V'],
+            ['I', 'V', 'IV', 'V']
+        ]
 
 
 
@@ -639,7 +658,7 @@ class Recorder:
             else:
                 note = 'C'
             #print note, freq
-            self.major_or_minor(freq)
+            #self.major_or_minor(freq, chord, xs, ys)
             play_next = self.circle[note]
             
             #self.major_or_minor(float(freq), note, xs, ys)
@@ -649,28 +668,40 @@ class Recorder:
                 self.last_played = play_next
                 return [note, play_next]
                 
-    def major_or_minor(self, freq, chord, xs, ys):
+    def getChord(self, xs, ys):
         # major:    4:5:6
         # minor:    10:12:15
-        freq = float(freq)       
         
         played_above = [x for i, x in enumerate(xs) if ys[i] > self.threshold]
         above = []
         for i, a in enumerate(played_above):
-            above.append([freq for freq, rng in self.ranges.iteritems() if a >= rng[0] and a < rng[1]][0])
-            #note = [chord for values in self.notes.itervalues() for chord, f in values.iteritems() if int(f) == int_freq]
-        print above
+            above.append([float(frq) for frq, rng in self.ranges.iteritems() if a >= rng[0] and a < rng[1]][0])
+        above = list(set(above))
+        #print above
         
-        major_freq = freq/4
-        major = [freq, major_freq*5, major_freq*6]
+        notes = [note for a in above for values in self.notes.itervalues() for note, f in values.iteritems() if int(f) == int(a)]
+        #print notes
         
-        t = 4       
-        [major[1] for a in above if a-major[1] <= t and a-major[1] >= -t]
-        [major[2] for a in above if a-major[2] <= t and a-major[2] >= -t]
+        for k, chord in self.c_chords.iteritems():
+            if set(chord).issubset(notes):
+                #print '-----------------------------------------------------'                
+                print k, chord
+                #print '-----------------------------------------------------'
+                self.played.append(k)
         
-        minor_freq = freq/10
-        minor = [freq, minor_freq*12, minor_freq*15]
         
+#        
+#        ffreq = float(freq)       
+#        major_freq = ffreq/4
+#        major = [ffreq, major_freq*5, major_freq*6]
+#        
+#        t = 4       
+#        [major[1] for a in above if a-major[1] <= t and a-major[1] >= -t]
+#        [major[2] for a in above if a-major[2] <= t and a-major[2] >= -t]
+#        
+#        minor_freq = ffreq/10
+#        minor = [ffreq, minor_freq*12, minor_freq*15]
+#        
         
         
        
