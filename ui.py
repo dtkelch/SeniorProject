@@ -1,4 +1,4 @@
-import ui_plot
+import output
 
 import sys
 
@@ -10,8 +10,8 @@ if __name__ == "__main__":
     ### SET-UP WINDOWS
     
     # WINDOW plot
-    win_plot = ui_plot.QtGui.QMainWindow()
-    uiplot = ui_plot.Ui_win_plot()
+    win_plot = output.QtGui.QMainWindow()
+    uiplot = output.Ui_win_plot()
     uiplot.setupUi(win_plot)
 
     ### DISPLAY WINDOWS

@@ -1,4 +1,4 @@
-import ui_plot
+import output as ui_plot
 import sys
 import numpy
 from PyQt4 import QtCore, QtGui
@@ -13,13 +13,20 @@ def plotSomething():
     xs,ys=recorder.fft()
     chord = recorder.getNote(xs, ys)
     if chord:    
-        uiplot.currentNote.setText("Current Note: " + chord[0])
-        uiplot.nextNote.setText("Try Playing: " + ', '.join(chord[1][1:]))
+        uiplot.currentLabel.setText("Current: " + chord[0])
+        uiplot.nextLabel.setText("Next: " + ', '.join(chord[1][1:]))
 
     c.setData(xs,ys)
     uiplot.qwtPlot.replot()
     recorder.newAudio=False
         
+def thresholdChange():
+    threshold = uiplot.threshold_slider.value()
+    recorder.updateThreshold(threshold)
+#    xt = [threshold for _ in range(204)]
+#    yt = [i for i in range(204)]
+#    t.setData(xt, yt)
+#    uiplot.qwtPlot.replot()
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
@@ -32,7 +39,10 @@ if __name__ == "__main__":
     c=Qwt.QwtPlotCurve()  
     c.attach(uiplot.qwtPlot)
     
-    uiplot.qwtPlot.setAxisScale(uiplot.qwtPlot.yLeft, 0, 10000)
+#    t=Qwt.QwtPlotCurve()
+#    t.attach(uiplot.qwtPlot)
+    
+    uiplot.qwtPlot.setAxisScale(uiplot.qwtPlot.yLeft, 0, 100000)
     
     uiplot.timer = QtCore.QTimer()
     uiplot.timer.start(1.0)
@@ -42,6 +52,10 @@ if __name__ == "__main__":
     recorder = Recorder()
     recorder.setup()
     recorder.continuousStart()
+    
+    uiplot.threshold_slider.setValue(50000)
+    uiplot.threshold_slider.sliderReleased.connect(lambda: thresholdChange())    
+    
     
 #    uiplot.btnA.clicked.connect(recorder.increaseThreshold())
 
