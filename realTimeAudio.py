@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import output as ui_plot
 import sys
 import numpy
@@ -12,10 +14,26 @@ def plotSomething():
         return
     xs,ys=recorder.fft()
     #chord = recorder.getNote(xs, ys)
-    chord = recorder.getChord(xs, ys)    
-    if chord:    
-        uiplot.currentLabel.setText("Current: " + chord[0])
-        uiplot.nextLabel.setText("Next: " + ', '.join(chord[1][1:]))
+    #data = [played, play_next]
+#    played, play_next = recorder.getChord(xs, ys)    
+#    if played is not None:    
+#        uiplot.chordBox.append(played[-1])
+#        uiplot.currentLabel.setText("Current: " + played[-1])
+#    if play_next is not None:
+#        uiplot.nextLabel.setText("Next: " + ', '.join(play_next))
+    data = recorder.getChord(xs, ys)    
+    if data is not None:
+        print 'data', data
+        try:
+            uiplot.chordBox.append(data[0])
+            uiplot.currentLabel.setText("Current: " + data[0])
+        except IndexError:
+            pass
+        try:
+            print 'data play next!!!!!!!!', data[1]
+            uiplot.nextLabel.setText("Next: " + ', '.join(data[1]))
+        except IndexError:
+            pass
 
     c.setData(xs,ys)
     uiplot.qwtPlot.replot()

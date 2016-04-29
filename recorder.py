@@ -10,6 +10,9 @@ import threading
 import pylab
 import struct
 
+from collections import defaultdict
+from pprint import pprint as p
+
 class Recorder:
     """Simple, cross-platform class to record from the microphone."""
 
@@ -542,24 +545,64 @@ class Recorder:
         self.played = []
         
         self.c_chords = {
-            'I':['C', 'E', 'G'],
-            'ii':['D', 'F', 'A'],
-            'iii':['E', 'G', 'B'],
-            'IV':['F', 'A', 'C'],
-            'V':['G', 'B', 'D'],
-            'vi':['A', 'C', 'E'],
-            'vii':['B', 'D', 'F']
+#            'I':['C', 'E', 'G'],
+#            'ii':['D', 'F', 'A'],
+#            'iii':['E', 'G', 'B'],
+#            'IV':['F', 'A', 'C'],
+#            'V':['G', 'B', 'D'],
+#            'vi':['A', 'C', 'E'],
+#            'vii':['B', 'D', 'F']
+            'C':['C', 'E', 'G'],
+            'Dm':['D', 'F', 'A'],
+            'Em':['E', 'G', 'B'],
+            'F':['F', 'A', 'C'],
+            'G':['G', 'B', 'D'],
+            'Am':['A', 'C', 'E'],
+            'Bdim':['B', 'D', 'F']
         }
         
         self.progressions = [
-            ['I', 'V', 'vi', 'IV'],
-            ['I', 'V', 'vi', 'iii'],
-            ['vi', 'V', 'IV', 'V'],
-            ['I', 'vi', 'IV', 'V'],
-            ['I', 'IV', 'vi', 'V'],
-            ['I', 'V', 'IV', 'V']
+#            ['I', 'V', 'vi', 'IV'],
+#            ['I', 'V', 'vi', 'iii'],
+#            ['vi', 'V', 'IV', 'V'],
+#            ['I', 'vi', 'IV', 'V'],
+#            ['I', 'IV', 'vi', 'V'],
+#            ['I', 'V', 'IV', 'V']
+            
+            ['C', 'G', 'Am', 'F'],
+            ['C', 'G', 'Am', 'Em'],
+            ['Am', 'G', 'F', 'G'],
+            ['C', 'Am', 'F', 'G'],
+            ['C', 'F', 'Am', 'G'],
+            ['C', 'G', 'F', 'G']
         ]
+        
+        
+#        def tree(): return defaultdict(tree)
+#        def dicts(t): return {k: dicts(t[k]) for k in t}
+#            
+#        self.prog = tree()
+#        self.prog['C']['F']['Am']['G']
+#        self.prog['C']['G']['F']['G']
+#        self.prog['C']['G']['Am']['Em']
+#        self.prog['C']['G']['Am']['F']
+#        self.prog['C']['Am']['F']['G']
+#        self.prog['Am']['G']['F']['G']
+#        p(dicts(p))
+        
+        self.prog = {
+            'C':['F', 'G'],
+            'F':['Am', 'G'],
+            'G':['F', 'Am'],
+            'Am':['Em', 'F', 'G'],
+            'Dm':[],
+            'Em':[],
+            'Bdim':[]
+        
+        }
 
+
+        
 
 
 
@@ -682,12 +725,29 @@ class Recorder:
         notes = [note for a in above for values in self.notes.itervalues() for note, f in values.iteritems() if int(f) == int(a)]
         #print notes
         
+        play_next = []
         for k, chord in self.c_chords.iteritems():
             if set(chord).issubset(notes):
                 #print '-----------------------------------------------------'                
                 print k, chord
                 #print '-----------------------------------------------------'
-                self.played.append(k)
+                if self.played:
+                    if k != self.played[-1]:    
+                        self.played.append(k)
+                        # determine what to play next
+#                        for prog in self.progressions:
+#                            if k in prog:
+#                                pass
+                        play_next = self.prog[k]
+                        print 'play next', play_next
+                        return [k, play_next]
+                        #return k, play_next
+
+                elif not self.played:
+                    play_next = self.prog[k]
+                    print 'play next', play_next
+                    return [k, play_next]
+        
         
         
 #        
